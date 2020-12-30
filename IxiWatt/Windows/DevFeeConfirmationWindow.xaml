@@ -1,0 +1,38 @@
+﻿<!--
+// Copyright (C) 2017-2020 Ixian OU
+// This file is part of IxiWatt - www.github.com/ProjectIxian/IxiWatt
+//
+// IxiWatt is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// IxiWatt is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with IxiWatt.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<Window x:Class="IxiWatt.Windows.DevFeeConfirmationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IxiWatt.Windows"
+        mc:Ignorable="d"
+        Title="IxiWatt Dev Fee Disclosure" Height="240" Width="420"
+        WindowStartupLocation="CenterOwner">
+    <Grid Background="#FF434851" Margin="0,0,0,0">
+        <Image Source="/IxiWatt;component/Resources/Ixian Logo 1.png" Stretch="UniformToFill" Height="48" Width="48" Margin="0,10,0,0" VerticalAlignment="Top"/>
+        <TextBlock Foreground="#FFFFFFFF" FontSize="18" TextWrapping="Wrap" Padding="10,0" TextDecorations="{x:Null}" Margin="0,40,0,0">
+            <LineBreak/>
+            In order to support development, this miner has 1.5% dev fee included. Every 100 minutes of mining, it will mine 1.5 minutes for developers.
+            <LineBreak/>
+            <LineBreak/>
+        </TextBlock>
+        <Button x:Name="Accept" Height="40" Click="Accept_Click" VerticalAlignment="Bottom" Margin="10,0,0,10" HorizontalAlignment="Left" Width="150">Accept</Button>
+        <Button x:Name="Reject" Height="40" Click="Reject_Click" VerticalAlignment="Bottom" Margin="0,0,10,10" HorizontalAlignment="Right" Width="150">Reject</Button>
+    </Grid>
+</Window>

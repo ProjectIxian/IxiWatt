@@ -1,0 +1,67 @@
+﻿<!--
+// Copyright (C) 2017-2020 Ixian OU
+// This file is part of IxiWatt - www.github.com/ProjectIxian/IxiWatt
+//
+// IxiWatt is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// IxiWatt is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with IxiWatt.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<Window x:Class="IxiWatt.Windows.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IxiWatt.Windows"
+        mc:Ignorable="d"
+        Title="About IxiWatt" MinWidth="420" MinHeight="300" Width="420" Height="500" MaxWidth="420"
+        WindowStartupLocation="CenterOwner">
+    <Grid Background="#FF434851" Margin="0">
+        <TextBlock Height="64" VerticalAlignment="Top" Background="#FF282B30"/>
+        <Image Source="/IxiWatt;component/Resources/Ixian Logo 1.png" Stretch="UniformToFill" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="10,8,0,0" OpacityMask="{x:Null}"/>
+        <Label Content="About IxiWatt" Height="64" VerticalAlignment="Top" Margin="63,0,0,0" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold"/>
+        <ScrollViewer Margin="0,64,0,0" HorizontalContentAlignment="Center">
+            <TextBlock Foreground="#FFFFFFFF" FontSize="18" TextWrapping="Wrap" Padding="10,0" Margin="0, 0, 0, 20" TextDecorations="{x:Null}">
+                <Run FontWeight="Bold" TextDecorations="Underline">About</Run><LineBreak/>
+                IxiWatt converts your electricity and your computer's processing power into IxiCash.<LineBreak/>
+                <LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline">Tips</Run><LineBreak/>
+                Never mine directly to an exchange's address!<LineBreak/>
+                Play with intensity setting (try with 10-20% first, to get an estimate, then try higher values), it's probable that lower intensity will give you better results.
+                For example we've noticed that the sweet spot for most AMD GPUs tested is around 27%.<LineBreak/>
+                We don't recommend using higher intensity values than 50%, unless you know what you're doing.<LineBreak/>
+                <LineBreak/>
+                You want as much hash rate as you can get and as little rejected shares as possible.<LineBreak/>
+                <LineBreak/>
+                Note that intensity setting determines allowed usage of your CPU/GPU by the miner.
+                Higher settings will use your computer more and it will heat more, potentially reducing the life-span of your computer.<LineBreak/>
+                <LineBreak/>
+                Happy Mining!<LineBreak/>
+                <LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline">Dev fees</Run><LineBreak/>
+                In order to support development, this miner has 1.5% dev fee included. Every 100 minutes of mining, it will mine 1.5 minutes for developers.<LineBreak/>
+                <LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline">Where to get IxiCash Wallet Address?</Run><LineBreak/>
+                The easiest way to get an IxiCash Address is with Spixi (Decentralized chat app and more) or by using an Ixian LiteWallet.<LineBreak/>
+                <LineBreak/>
+s                Find out more about Ixian and IxiCash:<LineBreak/>
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://www.ixian.io" Foreground="White" FontWeight="Bold" TextDecorations="{x:Null}">www.ixian.io</Hyperlink><LineBreak/>
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://www.spixi.io" Foreground="White" FontWeight="Bold" TextDecorations="{x:Null}">www.spixi.io</Hyperlink><LineBreak/>
+                <LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline">Credits</Run><LineBreak/>
+                IxiWatt uses <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/bogdanadnan/iximiner" Foreground="White" FontWeight="Bold" TextDecorations="{x:Null}">IxiMiner</Hyperlink>.
+                <LineBreak/>
+                <LineBreak/>
+                <Button x:Name="Dismiss" Click="Dismiss_Click" Height="40" VerticalAlignment="Bottom" Margin="110,0" Width="150">Close</Button>
+            </TextBlock>
+        </ScrollViewer>
+    </Grid>
+</Window>

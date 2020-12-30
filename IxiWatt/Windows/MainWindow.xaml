@@ -1,0 +1,80 @@
+﻿<!--
+// Copyright (C) 2017-2020 Ixian OU
+// This file is part of IxiWatt - www.github.com/ProjectIxian/IxiWatt
+//
+// IxiWatt is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// IxiWatt is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with IxiWatt.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<Window x:Class="IxiWatt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IxiWatt"
+        mc:Ignorable="d"
+        Title="IxiWatt - Easy Miner for IxiCash" MinHeight="660" MinWidth="450" Height="700" Width="450" Padding="20,0">
+    <Window.Resources>
+        <Image x:Key="toggle_on" Source="../Resources/Toggle_on.png" Height="49" Width="63" Stretch="Uniform" />
+        <Image x:Key="toggle_off" Source="../Resources/Toggle_off.png" Height="49" Width="63" Stretch="Uniform" />
+        <Image x:Key="toggle_disabled" Source="../Resources/Toggle_disabled.png" Height="49" Width="63" Stretch="Uniform" />
+    </Window.Resources>
+    <Grid Background="#FF434851" Margin="0">
+        <TextBlock Height="64" VerticalAlignment="Top" Background="#FF282B30"/>
+        <Image Source="/IxiWatt;component/Resources/Ixian Logo 1.png" Stretch="UniformToFill" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="10,8,0,0" OpacityMask="{x:Null}"/>
+        <Label Content="IxiWatt v0.5" Height="64" VerticalAlignment="Top" Margin="63,0,0,0" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold"/>
+        <Button ToolTip="Help" Name="bAbout" Height="24" VerticalAlignment="Top" HorizontalAlignment="Right" Width="24" Margin="0,20,20,0" OpacityMask="{x:Null}" BorderBrush="{x:Null}" Click="bAbout_Click" Style="{DynamicResource ButtonStyle1}">
+            <Button.Background>
+                <ImageBrush ImageSource="/IxiWatt;component/Resources/help_icon.png"/>
+            </Button.Background>
+        </Button>
+        <Label Content="Welcome to IxiWatt. An easy way to mine IxiCash." VerticalAlignment="Top" Margin="10,69,10,0" FontSize="14" Foreground="#FFCECFCE"/>
+
+        <Separator Margin="0,93,0,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
+
+        <TextBlock Text="Select Pool" Margin="10,113,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
+        <ComboBox Style="{DynamicResource ComboBoxStyle1}" Text="https://ixian.kiramine.com"  MinWidth="150"  Name="cbPoolSelect" Margin="10,139,10,0" SelectionChanged="PoolSelect_SelectionChanged" Height="42" VerticalAlignment="Top" VerticalContentAlignment="Center" Foreground="White" FontSize="16">
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">Custom</ComboBoxItem>
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixian.kiramine.com</ComboBoxItem>
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixian-us.kiramine.com</ComboBoxItem>
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixi.hash.express</ComboBoxItem>
+        </ComboBox>
+        <TextBlock Text="Pool URL" Margin="10,186,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBox Style="{DynamicResource TextBoxStyle1}" Text="" VerticalAlignment="Top"  Name="tbPoolURL" Margin="10,212,10,0"/>
+        <TextBlock Text="IxiCash Wallet Address" Margin="10,259,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBox Style="{DynamicResource TextBoxStyle1}" Text="" VerticalAlignment="Top"  Name="tbWalletAddress" Margin="10,285,10,0"/>
+
+        <Separator Margin="0,332,0,0" Height="30" VerticalAlignment="Top" Background="#3FFFFFFF"/>
+
+        <TextBlock Name="tbIntensity" Text="Set Mining Intensity: 50%" Margin="10,362,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
+        <Slider x:Name="sIntensity"
+            IsSnapToTickEnabled="true"
+            Value="50"
+            Minimum="0"
+            Maximum="100" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,388,10,0" Padding="0,100,0,0" Height="27" ValueChanged="intensity_ValueChanged" />
+        <Separator Margin="10,415,10,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
+
+        <Button x:Name="bStart" VerticalAlignment="Top" Margin="10,435,0,0" HorizontalAlignment="Left" Height="49" BorderBrush="{x:Null}" Click="bStart_Click" Width="70" Style="{DynamicResource ButtonStyle1}">
+        </Button>
+        <Label Name="lMiningStatus" Content="Mining is OFF" Height="49" VerticalAlignment="Top" Margin="0,435,10,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold" HorizontalAlignment="Right" Width="287"/>
+        <Separator Margin="0,484,0,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
+
+        <TextBlock ToolTip="Represents your hash rate. This value should be as high as you can get it on your hardware. Intensity setting determines this." Text="Hash Rate: 0kH/s" Margin="10,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="164" Name="tbHashRate" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Number of accepted shares. This value should constantly grow as shares are sent to the pool." Text="Acc: 0" Margin="174,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Name="tbAcceptedShares" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Number of rejected shares. This value shouldn't grow considerably and should be as close to 0 as possible." Text="Rej: 0" Margin="264,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Name="tbRejectedShares" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Number of blocks solved by your shares." Text="Blocks: 0" Margin="340,504,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Name="tbBlocks" Foreground="#FF9AF5A3" FontSize="16"/>
+
+        <TextBox Text="LOG:"  MinWidth="150"  Name="tbLog" Margin="10,530,10,40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" Foreground="#FFCECFCE"/>
+        <Separator Margin="0,0,0,20" VerticalAlignment="Bottom" Height="20" Background="#3FFFFFFF"/>
+        <Label Content="Copyright (c) Ixian OU 2020" Margin="0,0,0,0" VerticalAlignment="Bottom" Foreground="#FFAAAAAA" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+    </Grid>
+</Window>
