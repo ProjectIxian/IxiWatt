@@ -50,11 +50,11 @@ Higher settings will use your computer more and it will heat more, potentially r
 Happy Mining!  
 
 
-#Dev fees
+# Dev fees
 In order to support development, this miner has 1.5% dev fee included. Every 100 minutes of mining, it will mine 1.5 minutes for developers.  
 
 
-##Where to get IxiCash Wallet Address?
+## Where to get IxiCash Wallet Address?
 The easiest way to get an IxiCash Address is with Spixi (Decentralized chat app and more) or by using an Ixian LiteWallet.  
 
 
