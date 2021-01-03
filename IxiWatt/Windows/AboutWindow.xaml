@@ -29,12 +29,13 @@
         <Image Source="/IxiWatt;component/Resources/Ixian Logo 1.png" Stretch="UniformToFill" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="10,8,0,0" OpacityMask="{x:Null}"/>
         <Label Content="About IxiWatt" Height="64" VerticalAlignment="Top" Margin="63,0,0,0" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold"/>
         <ScrollViewer Margin="0,64,0,0" HorizontalContentAlignment="Center">
-            <TextBlock Foreground="#FFFFFFFF" FontSize="18" TextWrapping="Wrap" Padding="10,0" Margin="0, 0, 0, 20" TextDecorations="{x:Null}">
-                <Run FontWeight="Bold" TextDecorations="Underline">About</Run><LineBreak/>
+            <TextBlock Foreground="#FFFFFFFF" FontSize="16" TextWrapping="Wrap" Padding="10,0" Margin="0, 0, 0, 20" TextDecorations="{x:Null}">
+                <Run FontWeight="Bold" TextDecorations="Underline" FontSize="18">About</Run><LineBreak/>
                 IxiWatt converts your electricity and your computer's processing power into IxiCash.<LineBreak/>
                 <LineBreak/>
-                <Run FontWeight="Bold" TextDecorations="Underline">Tips</Run><LineBreak/>
-                Never mine directly to an exchange's address!<LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline" FontSize="18">Tips</Run><LineBreak/>
+                <Run FontWeight="Bold" >Never mine directly to an exchange's address!</Run><LineBreak/>
+                <LineBreak/>
                 Play with intensity setting (try with 10-20% first, to get an estimate, then try higher values), it's probable that lower intensity will give you better results.
                 For example we've noticed that the sweet spot for most AMD GPUs tested is around 27%.<LineBreak/>
                 We don't recommend using higher intensity values than 50%, unless you know what you're doing.<LineBreak/>
@@ -46,17 +47,17 @@
                 <LineBreak/>
                 Happy Mining!<LineBreak/>
                 <LineBreak/>
-                <Run FontWeight="Bold" TextDecorations="Underline">Dev fees</Run><LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline" FontSize="18">Dev fees</Run><LineBreak/>
                 In order to support development, this miner has 1.5% dev fee included. Every 100 minutes of mining, it will mine 1.5 minutes for developers.<LineBreak/>
                 <LineBreak/>
-                <Run FontWeight="Bold" TextDecorations="Underline">Where to get IxiCash Wallet Address?</Run><LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline" FontSize="18">Where to get IxiCash Wallet Address?</Run><LineBreak/>
                 The easiest way to get an IxiCash Address is with Spixi (Decentralized chat app and more) or by using an Ixian LiteWallet.<LineBreak/>
                 <LineBreak/>
-s                Find out more about Ixian and IxiCash:<LineBreak/>
+                Find out more about Ixian and IxiCash:<LineBreak/>
                 <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://www.ixian.io" Foreground="White" FontWeight="Bold" TextDecorations="{x:Null}">www.ixian.io</Hyperlink><LineBreak/>
                 <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://www.spixi.io" Foreground="White" FontWeight="Bold" TextDecorations="{x:Null}">www.spixi.io</Hyperlink><LineBreak/>
                 <LineBreak/>
-                <Run FontWeight="Bold" TextDecorations="Underline">Credits</Run><LineBreak/>
+                <Run FontWeight="Bold" TextDecorations="Underline" FontSize="18">Credits</Run><LineBreak/>
                 IxiWatt uses <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/bogdanadnan/iximiner" Foreground="White" FontWeight="Bold" TextDecorations="{x:Null}">IxiMiner</Hyperlink>.
                 <LineBreak/>
                 <LineBreak/>
