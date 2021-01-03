@@ -31,7 +31,7 @@
     <Grid Background="#FF434851" Margin="0">
         <TextBlock Height="64" VerticalAlignment="Top" Background="#FF282B30"/>
         <Image Source="/IxiWatt;component/Resources/Ixian Logo 1.png" Stretch="UniformToFill" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="10,8,0,0" OpacityMask="{x:Null}"/>
-        <Label Content="IxiWatt v0.5" Height="64" VerticalAlignment="Top" Margin="63,0,0,0" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold"/>
+        <Label Content="IxiWatt v0.6" Height="64" VerticalAlignment="Top" Margin="63,0,0,0" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold"/>
         <Button ToolTip="Help" Name="bAbout" Height="24" VerticalAlignment="Top" HorizontalAlignment="Right" Width="24" Margin="0,20,20,0" OpacityMask="{x:Null}" BorderBrush="{x:Null}" Click="bAbout_Click" Style="{DynamicResource ButtonStyle1}">
             <Button.Background>
                 <ImageBrush ImageSource="/IxiWatt;component/Resources/help_icon.png"/>
@@ -42,7 +42,7 @@
         <Separator Margin="0,93,0,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
 
         <TextBlock Text="Select Pool" Margin="10,113,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
-        <ComboBox Style="{DynamicResource ComboBoxStyle1}" Text="https://ixian.kiramine.com"  MinWidth="150"  Name="cbPoolSelect" Margin="10,139,10,0" SelectionChanged="PoolSelect_SelectionChanged" Height="42" VerticalAlignment="Top" VerticalContentAlignment="Center" Foreground="White" FontSize="16">
+        <ComboBox Style="{DynamicResource ComboBoxStyle1}" MinWidth="150"  Name="cbPoolSelect" Margin="10,139,10,0" SelectionChanged="PoolSelect_SelectionChanged" Height="42" VerticalAlignment="Top" VerticalContentAlignment="Center" FontSize="16">
             <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">Custom</ComboBoxItem>
             <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixian.kiramine.com</ComboBoxItem>
             <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixian-us.kiramine.com</ComboBoxItem>
@@ -55,12 +55,19 @@
 
         <Separator Margin="0,332,0,0" Height="30" VerticalAlignment="Top" Background="#3FFFFFFF"/>
 
-        <TextBlock Name="tbIntensity" Text="Set Mining Intensity: 50%" Margin="10,362,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
+        <ComboBox Style="{DynamicResource ComboBoxStyle1}" Name="cbHasher" Margin="10,367,304,0" Height="42" VerticalAlignment="Top" VerticalContentAlignment="Center" FontSize="16">
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">CPU</ComboBoxItem>
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">AMD</ComboBoxItem>
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">NVIDIA</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock Name="tbIntensity" Text="Mining Intensity: 20%" Margin="174,362,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
         <Slider x:Name="sIntensity"
             IsSnapToTickEnabled="true"
-            Value="50"
+            IsMoveToPointEnabled="true"
+            Value="20"
             Minimum="0"
-            Maximum="100" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="10,388,10,0" Padding="0,100,0,0" Height="27" ValueChanged="intensity_ValueChanged" />
+            Maximum="100" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="174,388,10,0" Padding="0,100,0,0" Height="27" ValueChanged="intensity_ValueChanged" />
         <Separator Margin="10,415,10,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
 
         <Button x:Name="bStart" VerticalAlignment="Top" Margin="10,435,0,0" HorizontalAlignment="Left" Height="49" BorderBrush="{x:Null}" Click="bStart_Click" Width="70" Style="{DynamicResource ButtonStyle1}">
@@ -70,7 +77,7 @@
 
         <TextBlock ToolTip="Represents your hash rate. This value should be as high as you can get it on your hardware. Intensity setting determines this." Text="Hash Rate: 0kH/s" Margin="10,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="164" Name="tbHashRate" Foreground="#FF9AF5A3" FontSize="16"/>
         <TextBlock ToolTip="Number of accepted shares. This value should constantly grow as shares are sent to the pool." Text="Acc: 0" Margin="174,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Name="tbAcceptedShares" Foreground="#FF9AF5A3" FontSize="16"/>
-        <TextBlock ToolTip="Number of rejected shares. This value shouldn't grow considerably and should be as close to 0 as possible." Text="Rej: 0" Margin="264,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Name="tbRejectedShares" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Number of rejected shares. This value should grow very slowly (a few per day) if everything works correctly." Text="Rej: 0" Margin="264,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Name="tbRejectedShares" Foreground="#FF9AF5A3" FontSize="16"/>
         <TextBlock ToolTip="Number of blocks solved by your shares." Text="Blocks: 0" Margin="340,504,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Name="tbBlocks" Foreground="#FF9AF5A3" FontSize="16"/>
 
         <TextBox Text="LOG:"  MinWidth="150"  Name="tbLog" Margin="10,530,10,40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" Foreground="#FFCECFCE"/>

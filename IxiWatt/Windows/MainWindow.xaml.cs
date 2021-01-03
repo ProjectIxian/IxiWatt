@@ -54,21 +54,40 @@ namespace IxiWatt
         const int devMineInterval = 12120; // 202 minutes
         const int devMineTime = 60; // 1 minute
 
-        string gpuDriver = null;
-
         public MainWindow()
         {
             Loaded += OnLoaded;
             InitializeComponent();
             cbPoolSelect.SelectedIndex = 0;
+            cbHasher.SelectedIndex = 0;
             tbLog.Text = "Log:\n";
             bStart.Content = FindResource("toggle_disabled");
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            string hasher = identifyGPU();
+            setHasherCheckBox(hasher);
             loadSettings();
             checkDevFeeConfirmation();
+        }
+
+        private void setHasherCheckBox(string hasher)
+        {
+            switch (hasher)
+            {
+                case "AMD":
+                    cbHasher.SelectedIndex = 1;
+                    break;
+
+                case "NVIDIA":
+                    cbHasher.SelectedIndex = 2;
+                    break;
+
+                default:
+                    cbHasher.SelectedIndex = 0;
+                    break;
+            }
         }
 
         private void checkDevFeeConfirmation()
@@ -134,6 +153,10 @@ namespace IxiWatt
             {
                 tbWalletAddress.Text = settings["WalletAddress"];
             }
+            if (settings.ContainsKey("Hasher"))
+            {
+                setHasherCheckBox(settings["Hasher"]);
+            }
             if (settings.ContainsKey("Intensity"))
             {
                 sIntensity.Value = Double.Parse(settings["Intensity"]);
@@ -178,15 +201,6 @@ namespace IxiWatt
 
         private string identifyGPU()
         {
-            if (gpuDriver != null)
-            {
-                if (gpuDriver == "")
-                {
-                    return null;
-                }
-                return gpuDriver;
-            }
-
             using (var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_DisplayConfiguration"))
             {
                 foreach (ManagementObject mo in searcher.Get())
@@ -199,13 +213,11 @@ namespace IxiWatt
                             log("Found GPU: " + graphicsCard);
                             if (graphicsCard.Contains("nvidia"))
                             {
-                                gpuDriver = "CUDA";
-                                return gpuDriver;
+                                return "NVIDIA";
                             }
                             if (graphicsCard.Contains("amd") || graphicsCard.Contains("advanced micro devices"))
                             {
-                                gpuDriver = "OPENCL";
-                                return gpuDriver;
+                                return "AMD";
                             }
                         }
                     }
@@ -223,35 +235,42 @@ namespace IxiWatt
                             log("Found GPU: " + graphicsCard);
                             if (graphicsCard.Contains("nvidia"))
                             {
-                                gpuDriver = "CUDA";
-                                return gpuDriver;
+                                return "NVIDIA";
                             }
                             if (graphicsCard.Contains("amd") || graphicsCard.Contains("advanced micro devices"))
                             {
-                                gpuDriver = "OPENCL";
-                                return gpuDriver;
+                                return "AMD";
                             }
                         }
                     }
                 }
             }
-            gpuDriver = "";
             return null;
         }
 
-        private void startIxiMiner(string pool, string wallet, string intensity)
+        private void startIxiMiner(string pool, string wallet, string hasher, string intensity)
         {
             if (minerProcess != null && !minerProcess.HasExited)
             {
                 log("Ixi Miner already running...");
                 return;
             }
-            string gpuDriver = identifyGPU();
-            log("Starting Ixi Miner using GPU Driver '" + gpuDriver + "'...");
+            string gpuDriver = null;
+            switch (hasher)
+            {
+                case "AMD":
+                    gpuDriver = "OPENCL";
+                    break;
+
+                case "NVIDIA":
+                    gpuDriver = "CUDA";
+                    break;
+            }
+            log("Starting Ixi Miner using driver '" + gpuDriver + "'...");
             minerProcess = new Process();
             minerProcess.StartInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "miner", "miner");
             minerProcess.StartInfo.FileName = Path.Combine(Directory.GetCurrentDirectory(), "miner", "miner", "iximiner.exe");
-            string extraParams = " --cpu-intensity " + intensity + " --gpu-intensity " + intensity;
+            string extraParams = " --cpu-intensity " + intensity + " --gpu-intensity 0";
             if (gpuDriver != null)
             {
                 extraParams = " --force-gpu-optimization " + gpuDriver + " --cpu-intensity 0 --gpu-intensity " + intensity;
@@ -364,7 +383,7 @@ namespace IxiWatt
                         miningForDevInitializing = false;
 
                         stopIxiMiner();
-                        startIxiMiner(settings["PoolURL"], settings["WalletAddress"], settings["Intensity"]);
+                        startIxiMiner(settings["PoolURL"], settings["WalletAddress"], settings["Hasher"], settings["Intensity"]);
                     }
                 }
                 else
@@ -379,7 +398,7 @@ namespace IxiWatt
                         miningForDevInitializing = true;
 
                         stopIxiMiner();
-                        startIxiMiner(settings["PoolURL"], devAddress, settings["Intensity"]);
+                        startIxiMiner(settings["PoolURL"], devAddress, settings["Hasher"], settings["Intensity"]);
                     }
                 }
             }
@@ -423,7 +442,29 @@ namespace IxiWatt
 
         private void intensity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            tbIntensity.Text = "Set Mining Intensity: " + e.NewValue + "%";
+            tbIntensity.Text = "Mining Intensity: " + e.NewValue + "%";
+        }
+
+        private void enableControls()
+        {
+            bStart.Content = FindResource("toggle_off");
+            lMiningStatus.Content = "Mining is OFF";
+            cbPoolSelect.IsEnabled = true;
+            tbPoolURL.IsEnabled = true;
+            tbWalletAddress.IsEnabled = true;
+            cbHasher.IsEnabled = true;
+            sIntensity.IsEnabled = true;
+        }
+
+        private void disableControls()
+        {
+            bStart.Content = FindResource("toggle_on");
+            lMiningStatus.Content = "Mining is ON";
+            cbPoolSelect.IsEnabled = false;
+            tbPoolURL.IsEnabled = false;
+            tbWalletAddress.IsEnabled = false;
+            cbHasher.IsEnabled = false;
+            sIntensity.IsEnabled = false;
         }
 
         private void bStart_Click(object sender, RoutedEventArgs e)
@@ -435,12 +476,7 @@ namespace IxiWatt
             if ((string)lMiningStatus.Content == "Mining is ON")
             {
                 stopIxiMiner();
-                bStart.Content = FindResource("toggle_off");
-                lMiningStatus.Content = "Mining is OFF";
-                cbPoolSelect.IsEnabled = true;
-                tbPoolURL.IsEnabled = true;
-                tbWalletAddress.IsEnabled = true;
-                sIntensity.IsEnabled = true;
+                enableControls();
             }
             else
             {
@@ -461,6 +497,7 @@ namespace IxiWatt
                 var t = this;
                 string poolUrl = tbPoolURL.Text;
                 string walletAddress = tbWalletAddress.Text;
+                string hasher = (string)((System.Windows.Controls.ComboBoxItem)cbHasher.SelectedItem).Content;
                 string intensity = sIntensity.Value.ToString();
 
                 if (!Address.validateChecksum(Base58CheckEncoding.DecodePlain(walletAddress)))
@@ -473,6 +510,7 @@ namespace IxiWatt
 
                 settings["PoolURL"] = poolUrl;
                 settings["WalletAddress"] = walletAddress;
+                settings["Hasher"] = hasher;
                 settings["Intensity"] = intensity;
                 saveSettings();
 
@@ -484,21 +522,20 @@ namespace IxiWatt
                     starting = true;
                     try
                     {
-                        fetchIxiMiner();
-                        startIxiMiner(poolUrl, walletAddress, intensity);
                         t.Dispatcher.Invoke(() =>
                         {
-                            bStart.Content = FindResource("toggle_on");
-                            lMiningStatus.Content = "Mining is ON";
-                            cbPoolSelect.IsEnabled = false;
-                            tbPoolURL.IsEnabled = false;
-                            tbWalletAddress.IsEnabled = false;
-                            sIntensity.IsEnabled = false;
+                            disableControls();
                         });
+                        fetchIxiMiner();
+                        startIxiMiner(poolUrl, walletAddress, hasher, intensity);
                     }
                     catch (Exception ex)
                     {
                         log("Exception occured while starting the miner: " + ex.ToString());
+                        t.Dispatcher.Invoke(() =>
+                        {
+                            enableControls();
+                        });
                     }
                     starting = false;
                 }).Start();
