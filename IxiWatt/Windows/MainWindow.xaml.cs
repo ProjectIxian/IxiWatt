@@ -187,11 +187,11 @@ namespace IxiWatt
                 Directory.Delete("miner", true);
             }
 
-            log("Fetching Ixi Miner...");
+            log("Downloading Ixi Miner from https://github.com/ProjectIxian/iximiner/releases/download/v0.2.0alpha/iximiner_v0.2.0_08.08.2019_windows_10.zip, please wait...");
             using (var client = new WebClient())
             {
                 Directory.CreateDirectory("miner");
-                client.DownloadFile("https://github.com/bogdanadnan/iximiner/releases/download/v0.2.0alpha/iximiner_v0.2.0_08.08.2019_windows_10.zip", "miner/iximiner08082019Win.zip");
+                client.DownloadFile("https://github.com/ProjectIxian/iximiner/releases/download/v0.2.0alpha/iximiner_v0.2.0_08.08.2019_windows_10.zip", "miner/iximiner08082019Win.zip");
                 log("Unpacking Ixi Miner...");
                 ZipFile.ExtractToDirectory("miner/iximiner08082019Win.zip", "miner");
                 Directory.Move("miner/iximiner_v0.2.0_08.08.2019_windows_10", "miner/miner");

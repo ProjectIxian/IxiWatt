@@ -33,8 +33,11 @@ The Ixian GitHub project is divided into seven main parts:
 3. Enter your IxiCash wallet address into the IxiCash Wallet Address input field.  
 4. Set intensity to the desired level and start mining.  
 
+If the software crashes with missing DLL/files exception, install .NET Framework 4.8 and the VC Redistributable 2013 and 2015. VC Redist files are included with every IxiWatt release in the vcredist folder.
+
 ## Tips
-Never mine directly to an exchange's address!  
+**Never mine directly to an exchange's address!**  
+  
 Play with intensity setting (try with 10-20% first, to get an estimate, then try higher values), it's probable that lower intensity will give you better results.  
 For example we've noticed that the sweet spot for most AMD GPUs tested is around 27%.  
 
