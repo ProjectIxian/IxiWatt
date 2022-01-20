@@ -44,9 +44,9 @@
         <TextBlock Text="Select Pool" Margin="10,113,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
         <ComboBox Style="{DynamicResource ComboBoxStyle1}" MinWidth="150"  Name="cbPoolSelect" Margin="10,139,10,0" SelectionChanged="PoolSelect_SelectionChanged" Height="42" VerticalAlignment="Top" VerticalContentAlignment="Center" FontSize="16">
             <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">Custom</ComboBoxItem>
-            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixian.kiramine.com</ComboBoxItem>
-            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixian-us.kiramine.com</ComboBoxItem>
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://mineixi.com</ComboBoxItem>
             <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">https://ixi.hash.express</ComboBoxItem>
+            <ComboBoxItem Background="#FF797E87" VerticalContentAlignment="Center" Height="48" Foreground="White" FontSize="16" Style="{DynamicResource ComboBoxItemStyle1}">http://ixian.changeling.biz:8081</ComboBoxItem>
         </ComboBox>
         <TextBlock Text="Pool URL" Margin="10,186,10,0" VerticalAlignment="Top" Foreground="#FF9AF5A3" FontSize="16"/>
         <TextBox Style="{DynamicResource TextBoxStyle1}" Text="" VerticalAlignment="Top"  Name="tbPoolURL" Margin="10,212,10,0"/>
