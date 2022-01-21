@@ -22,7 +22,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IxiWatt"
         mc:Ignorable="d"
-        Title="IxiWatt - Easy Miner for IxiCash" MinHeight="660" MinWidth="450" Height="700" Width="450" Padding="20,0">
+        Title="IxiWatt - Easy Miner for IxiCash" MinHeight="660" MinWidth="450" Height="760.75" Width="450" Padding="20,0">
     <Window.Resources>
         <Image x:Key="toggle_on" Source="../Resources/Toggle_on.png" Height="49" Width="63" Stretch="Uniform" />
         <Image x:Key="toggle_off" Source="../Resources/Toggle_off.png" Height="49" Width="63" Stretch="Uniform" />
@@ -31,7 +31,7 @@
     <Grid Background="#FF434851" Margin="0">
         <TextBlock Height="64" VerticalAlignment="Top" Background="#FF282B30"/>
         <Image Source="/IxiWatt;component/Resources/Ixian Logo 1.png" Stretch="UniformToFill" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Margin="10,8,0,0" OpacityMask="{x:Null}"/>
-        <Label Content="IxiWatt v0.6" Height="64" VerticalAlignment="Top" Margin="63,0,0,0" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold"/>
+        <Label Content="IxiWatt v0.7" Height="64" VerticalAlignment="Top" Margin="63,0,0,0" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold"/>
         <Button ToolTip="Help" Name="bAbout" Height="24" VerticalAlignment="Top" HorizontalAlignment="Right" Width="24" Margin="0,20,20,0" OpacityMask="{x:Null}" BorderBrush="{x:Null}" Click="bAbout_Click" Style="{DynamicResource ButtonStyle1}">
             <Button.Background>
                 <ImageBrush ImageSource="/IxiWatt;component/Resources/help_icon.png"/>
@@ -69,19 +69,24 @@
             Minimum="0"
             Maximum="100" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="174,388,10,0" Padding="0,100,0,0" Height="27" ValueChanged="intensity_ValueChanged" />
         <Separator Margin="10,415,10,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
+        <CheckBox Name="cbFailsafe" Content="Pool Failsafe" HorizontalAlignment="Left" Margin="10,440,0,0" Foreground="#FF9AF5A3" FontSize="16"  VerticalAlignment="Top" Width="150" ToolTip="Switch to the next pool in the list if the current pool connection fails 3 times" IsChecked="True"/>
+        <CheckBox Name="cbAutoMine" Content="Start Mining on Open" HorizontalAlignment="Left" Margin="214,440,0,0" Foreground="#FF9AF5A3" FontSize="16"  VerticalAlignment="Top" Width="211" ToolTip="Automatically start mining when IxiWatt is opened"/>
+        <Separator Margin="10,466,10,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
 
-        <Button x:Name="bStart" VerticalAlignment="Top" Margin="10,435,0,0" HorizontalAlignment="Left" Height="49" BorderBrush="{x:Null}" Click="bStart_Click" Width="70" Style="{DynamicResource ButtonStyle1}">
+
+        <Button x:Name="bStart" VerticalAlignment="Top" Margin="10,491,0,0" HorizontalAlignment="Left" Height="49" BorderBrush="{x:Null}" Click="bStart_Click" Width="70" Style="{DynamicResource ButtonStyle1}">
         </Button>
-        <Label Name="lMiningStatus" Content="Mining is OFF" Height="49" VerticalAlignment="Top" Margin="0,435,10,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold" HorizontalAlignment="Right" Width="287"/>
-        <Separator Margin="0,484,0,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
+        <Label Name="lMiningStatus" Content="Mining is OFF" Height="49" VerticalAlignment="Top" Margin="0,491,10,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="18" Foreground="#FFE5E5E5" FontWeight="Bold" HorizontalAlignment="Right" Width="287"/>
+        <Separator Margin="0,540,0,0" Height="20" VerticalAlignment="Top" Background="#3FFFFFFF"/>
 
-        <TextBlock ToolTip="Represents your hash rate. This value should be as high as you can get it on your hardware. Intensity setting determines this." Text="Hash Rate: 0kH/s" Margin="10,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="164" Name="tbHashRate" Foreground="#FF9AF5A3" FontSize="16"/>
-        <TextBlock ToolTip="Number of accepted shares. This value should constantly grow as shares are sent to the pool." Text="Acc: 0" Margin="174,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Name="tbAcceptedShares" Foreground="#FF9AF5A3" FontSize="16"/>
-        <TextBlock ToolTip="Number of rejected shares. This value should grow very slowly (a few per day) if everything works correctly." Text="Rej: 0" Margin="264,504,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Name="tbRejectedShares" Foreground="#FF9AF5A3" FontSize="16"/>
-        <TextBlock ToolTip="Number of blocks solved by your shares." Text="Blocks: 0" Margin="340,504,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Name="tbBlocks" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Represents your hash rate. This value should be as high as you can get it on your hardware. Intensity setting determines this." Text="Hash Rate: 0kH/s" Margin="10,560,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="164" Name="tbHashRate" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Number of accepted shares. This value should constantly grow as shares are sent to the pool." Text="Acc: 0" Margin="174,560,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Name="tbAcceptedShares" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Number of rejected shares. This value should grow very slowly (a few per day) if everything works correctly." Text="Rej: 0" Margin="264,560,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Name="tbRejectedShares" Foreground="#FF9AF5A3" FontSize="16"/>
+        <TextBlock ToolTip="Number of blocks solved by your shares." Text="Blocks: 0" Margin="340,560,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Name="tbBlocks" Foreground="#FF9AF5A3" FontSize="16"/>
 
-        <TextBox Text="LOG:"  MinWidth="150"  Name="tbLog" Margin="10,530,10,40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" Foreground="#FFCECFCE"/>
+        <TextBox Text="LOG:"  MinWidth="150"  Name="tbLog" Margin="10,594,10,40" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent" Foreground="#FFCECFCE"/>
         <Separator Margin="0,0,0,20" VerticalAlignment="Bottom" Height="20" Background="#3FFFFFFF"/>
-        <Label Content="Copyright (c) Ixian OU 2020" Margin="0,0,0,0" VerticalAlignment="Bottom" Foreground="#FFAAAAAA" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Copyright (c) Ixian OU 2022" Margin="0,0,0,0" VerticalAlignment="Bottom" Foreground="#FFAAAAAA" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
     </Grid>
 </Window>

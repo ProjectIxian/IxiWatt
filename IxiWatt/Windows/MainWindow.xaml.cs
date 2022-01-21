@@ -54,6 +54,9 @@ namespace IxiWatt
         const int devMineInterval = 12120; // 202 minutes
         const int devMineTime = 60; // 1 minute
 
+        int connectionFailures = 0; // Connection failure counter for pool failsafe option
+        int lastFailsafePoolIndex = 0;
+
         public MainWindow()
         {
             Loaded += OnLoaded;
@@ -70,6 +73,11 @@ namespace IxiWatt
             setHasherCheckBox(hasher);
             loadSettings();
             checkDevFeeConfirmation();
+
+            // Auto start mining if enabled
+            if(cbAutoMine.IsChecked == true)
+                bStart_Click(sender, e);
+
         }
 
         private void setHasherCheckBox(string hasher)
@@ -160,6 +168,14 @@ namespace IxiWatt
             if (settings.ContainsKey("Intensity"))
             {
                 sIntensity.Value = Double.Parse(settings["Intensity"]);
+            }
+            if (settings.ContainsKey("AutoMine"))
+            {
+                cbAutoMine.IsChecked = bool.Parse(settings["AutoMine"]);
+            }
+            if (settings.ContainsKey("FailSafe"))
+            {
+                cbFailsafe.IsChecked = bool.Parse(settings["FailSafe"]);
             }
         }
 
@@ -334,6 +350,48 @@ namespace IxiWatt
             try
             {
                 log(outLine.Data);
+
+                if(outLine.Data.StartsWith("Error connecting"))
+                {
+                    connectionFailures++;
+                    log(string.Format("Error connecting to pool. Failure count: {0}", connectionFailures));
+
+                    if (connectionFailures > 2)
+                    {
+                        // Check if failsafe enabled
+                        if (bool.Parse(settings["FailSafe"]) == false)
+                            return;
+
+                        stopIxiMiner();
+
+                        lastFailsafePoolIndex++;
+                        // Rotate if necessary
+                        if (lastFailsafePoolIndex > 3)
+                            lastFailsafePoolIndex = 0;
+
+                        string new_pool = "";
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            new_pool = tbPoolURL.Text; // Default to custom pool
+                            // Check if there is a custom pool URL first
+                            if (new_pool.Length < 1)
+                                lastFailsafePoolIndex = 1;
+                            if (lastFailsafePoolIndex > 0)
+                            {
+                                ComboBoxItem cb = (ComboBoxItem)cbPoolSelect.Items.GetItemAt(lastFailsafePoolIndex);
+                                new_pool = cb.Content.ToString();
+                            }
+                        });
+
+                        settings["PoolURL"] = new_pool;
+                        log(string.Format("Connecting to new failsafe pool: {0}", new_pool));
+                        miningForDev = false;
+                        connectionFailures = 0;
+                        startIxiMiner(settings["PoolURL"], settings["WalletAddress"], settings["Hasher"], settings["Intensity"]);
+                    }
+                    return;
+                }
+
                 string[] out_split = outLine.Data.Split('|');
                 if (out_split.Length <= 5)
                 {
@@ -357,7 +415,8 @@ namespace IxiWatt
                         }
                     }
                     return;
-                }
+                }                    
+
 
                 int acc = Int32.Parse(out_split[accIndex].Trim());
                 int rej = Int32.Parse(out_split[rejIndex].Trim());
@@ -376,6 +435,7 @@ namespace IxiWatt
                     if ((DateTime.Now - startedRunning).TotalSeconds > devMineTime)
                     {
                         log("Switching to mining for user.");
+                        connectionFailures = 0; // Reset connection failure counter
                         baseAcc += acc;
                         baseRej += rej;
                         baseBlocks += blocks;
@@ -391,6 +451,7 @@ namespace IxiWatt
                     if ((DateTime.Now - startedRunning).TotalSeconds > devMineInterval)
                     {
                         log("Switching to mining for dev.");
+                        connectionFailures = 0; // Reset connection failure counter
                         baseAcc += acc;
                         baseRej += rej;
                         baseBlocks += blocks;
@@ -454,6 +515,8 @@ namespace IxiWatt
             tbWalletAddress.IsEnabled = true;
             cbHasher.IsEnabled = true;
             sIntensity.IsEnabled = true;
+            cbAutoMine.IsEnabled = true;
+            cbFailsafe.IsEnabled = true;
         }
 
         private void disableControls()
@@ -465,6 +528,8 @@ namespace IxiWatt
             tbWalletAddress.IsEnabled = false;
             cbHasher.IsEnabled = false;
             sIntensity.IsEnabled = false;
+            cbAutoMine.IsEnabled = false;
+            cbFailsafe.IsEnabled = false;
         }
 
         private void bStart_Click(object sender, RoutedEventArgs e)
@@ -512,6 +577,8 @@ namespace IxiWatt
                 settings["WalletAddress"] = walletAddress;
                 settings["Hasher"] = hasher;
                 settings["Intensity"] = intensity;
+                settings["AutoMine"] = cbAutoMine.IsChecked.ToString();
+                settings["FailSafe"] = cbFailsafe.IsChecked.ToString();
                 saveSettings();
 
                 new Thread(() => {
